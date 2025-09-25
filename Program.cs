@@ -1,2 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Bienvenu dans mon application");
+﻿using System;
+namespace ArayDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string prenom = "Baye Elimane";
+            string nom = "Gueye";
+            Console.WriteLine(prenom + " " + nom);
+        }
+    }
+}
