@@ -5,17 +5,14 @@ namespace ArayDemo
     {
         static void Main(string[] args)
         {
-            int a = 10;
-            int b = 20;
-            if (a < b)
+            int n = 7;
+
+            int f = 1;
+            for (int i = 1; i <= n; i++)
             {
-                Console.WriteLine("a est plus petit que b");
+                f *= i;
             }
-            else
-            {
-                Console.WriteLine("a est plus grand que b");
-            }
-        
+            Console.WriteLine("La Factorielle de "+n+" est :" + f);
         }
     }
 }
