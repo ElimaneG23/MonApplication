@@ -5,9 +5,17 @@ namespace ArayDemo
     {
         static void Main(string[] args)
         {
-            string prenom = "Baye Elimane";
-            string nom = "Gueye";
-            Console.WriteLine(prenom + " " + nom);
+            int a = 10;
+            int b = 20;
+            if (a < b)
+            {
+                Console.WriteLine("a est plus petit que b");
+            }
+            else
+            {
+                Console.WriteLine("a est plus grand que b");
+            }
+        
         }
     }
 }
