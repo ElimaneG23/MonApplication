@@ -5,35 +5,20 @@ namespace ExoCsharp
     {
         static void Main(string[] args)
         {
-            Chien rex = new Chien();
-            Chat minou = new Chat();
+            List<string> names = new List<string>
+            {
+                "Elimane", "Becaye", "Abibatou", "Daouda", "Aissatou",
+                 "Mamadou", "Fatoumata", "Oumar", "Khadidiatou", "Moussa",
+                "Aminata", "Cheikh", "Coumba", "Seynabou", "Ibrahima",
+                 "Adama", "Ndeye", "Mame", "Assane", "Pape",
+            };
+            foreach (var name in names)
+            {
+                Console.WriteLine("Je m'appelle " + name);
 
-            rex.Parler();  
-            minou.Parler();
 
+            }
         }
-    }
-    public class Animal
-    {
-        public void Parler()
-        {
-            Console.WriteLine("L'animal fait un bruit...");
-        }
-    }
 
-    public class Chien : Animal
-    {
-        public new void Parler()
-        {
-            Console.WriteLine("Le chien aboie");
-        }
-    }
-
-    public class Chat : Animal
-    {
-        public new void Parler()
-        {
-            Console.WriteLine("Le chat miaule");
-        }
     }
 }
