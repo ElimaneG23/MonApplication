@@ -5,7 +5,8 @@ namespace ExoCsharp
     {
         static void Main(string[] args)
         {
-            
+            Student student = new Student();
+            student.AfficherInfos();
 
         }
     }
