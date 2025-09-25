@@ -5,19 +5,12 @@ namespace ExoCsharp
     {
         static void Main(string[] args)
         {
-            List<string> names = new List<string>
-            {
-                "Elimane", "Becaye", "Abibatou", "Daouda", "Aissatou",
-                 "Mamadou", "Fatoumata", "Oumar", "Khadidiatou", "Moussa",
-                "Aminata", "Cheikh", "Coumba", "Seynabou", "Ibrahima",
-                 "Adama", "Ndeye", "Mame", "Assane", "Pape",
-            };
-            foreach (var name in names)
-            {
-                Console.WriteLine("Je m'appelle " + name);
+            int nombre = 15;
+            Console.WriteLine("La valeur de nombre est : " + nombre);
 
-
-            }
+            nombre = 30;
+            Console.WriteLine("Maintenant, nombre vaut : " + nombre);
+           
         }
 
     }
