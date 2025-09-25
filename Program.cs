@@ -14,7 +14,7 @@ namespace ExoCsharp
         string Nom = "Elimane";
         int Age = 35;
 
-        void AfficherInfos()
+        public void AfficherInfos()
         {
             Console.WriteLine("Nom: " + Nom + " est age de" + Age + " ans");
         }
