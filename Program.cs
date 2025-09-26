@@ -5,9 +5,17 @@ namespace ArayDemo
     {
         static void Main(string[] args)
         {
-            string prenom = "Baye Elimane";
-            string nom = "Gueye";
-            Console.WriteLine(prenom + " " + nom);
+            string? prenom;
+            string? nom;
+            string? adreesse;
+
+            Console.WriteLine("Entrer votre prenom");
+            prenom = Console.ReadLine();
+            Console.WriteLine("Entrer votre nom");
+            nom = Console.ReadLine();
+            Console.WriteLine("Entrer votre adresse");
+            adreesse = Console.ReadLine();
+            
         }
     }
 }
