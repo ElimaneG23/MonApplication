@@ -1,87 +1,110 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using myNewApp.Model;
 namespace ExoCsharp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Bibliotheque maBibliotheque = new Bibliotheque();
+            List<Livre> bibliotheque = new List<Livre>();
+            Livre livre1 = new Livre("1984", "George Orwell", 123456);
+            Livre livre2 = new Livre("Le Petit Prince", "Antoine de Saint-Exupéry", 789012);
+            Livre livre3 = new Livre("Fahrenheit 451", "Ray Bradbury", 345678);
+            Livre livre4 = new Livre("Brave New World", "Aldous Huxley", 901234);
+            Livre livre5 = new Livre("Les Misérables", "Victor Hugo", 567890);
+            bibliotheque.AddRange(livre1, livre2, livre3, livre4, livre5);
+            
+            bool continuer = true;
+            while (true)
+            {
+                Console.WriteLine("\n--- Gestion Bibliothèque ---");
+                Console.WriteLine("1. Afficher tous les livres");
+                Console.WriteLine("2. Ajouter un livre");
+                Console.WriteLine("3. Rechercher un livre par titre");
+                Console.WriteLine("4. Quitter");
+                Console.Write("Choisissez une option : ");
 
-            Livre livre1 = new Livre { Titre = "1984", Auteur = "George Orwell", ISBN = 123456789 };
-            Livre livre2 = new Livre { Titre = "Phedre", Auteur = "Jean Racine", ISBN = 123456789 };
-            Livre livre3 = new Livre { Titre = "Une Si Longue Lettre", Auteur = "Mariama ba", ISBN = 123456789 };
-            Livre livre4 = new Livre { Titre = "L'os de Mor Lam", Auteur = "Birago Diop", ISBN = 123456789 };
-            Livre livre5 = new Livre { Titre = "Vol de nuit", Auteur = "Antoine de Saint-Exupéry", ISBN = 123456789 };
-            Livre livre6 = new Livre { Titre = "Le Petit Prince", Auteur = "Antoine de Saint-Exupéry", ISBN = 987654321 };
+                string choix = Console.ReadLine();
 
-            maBibliotheque.AfficherLivres();
-
-            maBibliotheque.AjouterLivre(livre4);
-            maBibliotheque.AjouterLivre(livre6);
-            maBibliotheque.AjouterLivre(livre3);
-
-            maBibliotheque.RechercherLivre("1984");
-            maBibliotheque.RechercherLivre("Le Seigneur des Anneaux");
-
-            maBibliotheque.SupprimerLivre(livre4.Titre);
-
-           
-        }
-
+                switch (choix)
+                {
+                    case "1":
+                        Bibliotheque.AfficherLivres(bibliotheque);
+                        break;
+                    case "2":
+                        Bibliotheque.AjouterLivre(bibliotheque);
+                        break;
+                    
+                    case "3":
+                        Bibliotheque.RechercherLivre(bibliotheque);
+                        break;
+                    case "4":
+                        continuer = false;
+                        break;
+                    default:
+                        Console.WriteLine("Option invalide !");
+                        break;
+                }
+            }
+        }  
     }
-    class Livre
-    {
-        public string Titre;
-        public string Auteur;
-        public int ISBN;
 
-        
-    }
 
     class Bibliotheque
     {
         public List<Livre> Livres = new List<Livre>();
 
-        public void AjouterLivre(Livre livre)
-        {
-            Livres.Add(livre);
-            Console.WriteLine($"Livre '{livre.Titre}' ajouté à la bibliothèque.");
-        }
-
-        public void AfficherLivres()
+        public static void AfficherLivres(List<Livre> bibliotheque)
         {
 
-            foreach (var livre in Livres)
+            Console.WriteLine("\n--- Liste des livres ---");
+            foreach (var livre in bibliotheque)
             {
-                Console.WriteLine($"Titre: {livre.Titre}, Auteur: {livre.Auteur}, ISBN: {livre.ISBN}");
+                livre.AfficherLivres();
             }
             
         }
 
-        public void RechercherLivre(string titre)
+        public static void AjouterLivre(List<Livre> bibliotheque)
         {
-            var livreTrouve = Livres.Find(l => l.Titre.Equals(titre, StringComparison.OrdinalIgnoreCase));
-            if (livreTrouve != null)
+            Console.Write("Titre : ");
+            string titre = Console.ReadLine();
+
+            Console.Write("Auteur : ");
+            string auteur = Console.ReadLine();
+
+            int annee;
+            while (true)
             {
-                Console.WriteLine($"Livre trouvé: Titre: {livreTrouve.Titre}, Auteur: {livreTrouve.Auteur}, ISBN: {livreTrouve.ISBN}");
+                Console.Write("Année de publication : ");
+                if (int.TryParse(Console.ReadLine(), out annee))
+                    break;
+                else
+                    Console.WriteLine("Veuillez entrer un nombre valide pour l'année.");
             }
-            else
-            {
-                Console.WriteLine("Livre non trouvé.");
-            }
+
+            bibliotheque.Add(new Livre(titre, auteur, annee));
+            Console.WriteLine("Livre ajouté avec succès !");
         }
-        public void SupprimerLivre(string titre)
+
+
+        public static void RechercherLivre(List<Livre> bibliotheque)
         {
-            var livreASupprimer = Livres.Find(l => l.Titre.Equals(titre, StringComparison.OrdinalIgnoreCase));
-            if (livreASupprimer != null)
+            Console.Write("Entrez le titre à rechercher : ");
+            string recherche = Console.ReadLine();
+
+            var resultat = bibliotheque.FindAll(l => l.Titre.ToLower().Contains(recherche.ToLower()));
+
+            if (resultat.Count == 0)
             {
-                Livres.Remove(livreASupprimer);
-                Console.WriteLine($"Livre '{titre}'a été supprimé de la bibliothèque.");
+                Console.WriteLine("Aucun livre trouvé.");
             }
             else
             {
-                Console.WriteLine("Livre non trouvé.");
+                Console.WriteLine($"\n--- Résultats ({resultat.Count}) ---");
+                foreach (var livre in resultat)
+                    livre.AfficherLivres();
             }
         }
     }
