@@ -19,7 +19,7 @@ class Livre
     }
     public void AfficherLivres()
     {
-        Console.WriteLine($"Titre: {Titre}, Auteur: {Auteur}, ISBN: {ISBN}");
+        Console.WriteLine($"Voici le livre intutilé {Titre}, Auteur: {Auteur}, ISBN: {ISBN}");
     }
 
 }

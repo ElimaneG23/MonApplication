@@ -16,7 +16,7 @@ namespace ExoCsharp
             bibliotheque.AddRange(livre1, livre2, livre3, livre4, livre5);
             
             bool continuer = true;
-            while (true)
+            while (continuer)
             {
                 Console.WriteLine("\n--- Gestion Bibliothèque ---");
                 Console.WriteLine("1. Afficher tous les livres");
@@ -43,7 +43,7 @@ namespace ExoCsharp
                         continuer = false;
                         break;
                     default:
-                        Console.WriteLine("Option invalide !");
+                        Console.WriteLine("Option invalide ! Rechoisissez une option.");
                         break;
                 }
             }
@@ -96,16 +96,10 @@ namespace ExoCsharp
 
             var resultat = bibliotheque.FindAll(l => l.Titre.ToLower().Contains(recherche.ToLower()));
 
-            if (resultat.Count == 0)
-            {
-                Console.WriteLine("Aucun livre trouvé.");
-            }
-            else
-            {
-                Console.WriteLine($"\n--- Résultats ({resultat.Count}) ---");
+           
                 foreach (var livre in resultat)
                     livre.AfficherLivres();
-            }
+            
         }
     }
 }
