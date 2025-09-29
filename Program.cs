@@ -4,42 +4,30 @@ class Programme
 {
     static void Main()
     {
-        // Changer la couleur du texte
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("=== Bienvenue dans le mini programme C# ===");
-        Console.ResetColor(); // Remet les couleurs par défaut
-
-        // Demander le nom de l'utilisateur
-        Console.Write("Quel est ton prénom ? ");
-        string prenom = Console.ReadLine();
-
-        // Effacer l'écran après la saisie
-        Console.Clear();
-
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("Bonjour " + prenom + " !");
-        Console.ResetColor();
-
-        // Demander l'âge
-        Console.Write("Quel âge as-tu ? ");
-        string ageTexte = Console.ReadLine();
-
-        // Essayer de convertir en entier
-        int age;
-        if (int.TryParse(ageTexte, out age))
+        Console.WriteLine("Ecrivez votre premier numéro :");
+        int numb1;
+        while (!int.TryParse(Console.ReadLine(), out numb1))
         {
-            Console.WriteLine("Tu as " + age + " ans.");
+            Console.WriteLine("Ce n'est pas un numéro valide. Reecrivez votre premier numéro :");
+        }
+
+        Console.WriteLine("Ecrivez votre deuxième numéro :");
+        int numb2;
+        while (!int.TryParse(Console.ReadLine(), out numb2))
+        {
+            Console.WriteLine("Ce n'est pas un numéro valide. Reecrivez votre deuxième numéro :");
+        }
+
+
+
+        if (numb1 > numb2)
+        {
+            Console.WriteLine("Le premier numéro est plus grand");
         }
         else
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("L'âge saisi n'est pas valide !");
-            Console.ResetColor();
+            Console.WriteLine("Le deuxième numéro est plus grand");
         }
 
-        // Attendre que l'utilisateur appuie sur une touche
-        Console.WriteLine("\nAppuie sur une touche pour quitter...");
-        ConsoleKeyInfo touche = Console.ReadKey();
-        Console.WriteLine("\nTu as appuyé sur : " + touche.Key);
     }
 }
