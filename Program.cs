@@ -15,6 +15,9 @@ namespace ArayDemo
             nom = Console.ReadLine();
             Console.WriteLine("Entrer votre adresse");
             adreesse = Console.ReadLine();
+            Console.WriteLine("Prenom : " + prenom );
+            Console.WriteLine("Nom : " + nom );
+            Console.WriteLine("Adresse : " + adreesse );
             
         }
     }
