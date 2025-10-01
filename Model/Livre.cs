@@ -3,7 +3,7 @@ namespace myNewApp.Model;
 
 class Livre
 {
-    internal static object bibliotheque;
+    
     public string Titre;
     public string Auteur;
     public int ISBN;
