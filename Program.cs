@@ -8,6 +8,7 @@ namespace ExoCsharp
         static void Main(string[] args)
         {
 
+            // Initialisation de la bibliothèque avec quelques livres et personnes
             List<Livre> bibliotheque = new List<Livre>();
             Livre livre1 = new Livre("1984", "George Orwell", 123456);
             Livre livre2 = new Livre("Le Petit Prince", "Antoine de Saint-Exupéry", 789012);
@@ -24,9 +25,11 @@ namespace ExoCsharp
             Personne personne5 = new Personne("Sow", "Lamine", "sowlamine4g@gmail.com");
             personnes.AddRange(new List<Personne> { personne1, personne2, personne3, personne4, personne5 });
 
+
+            // Menu interactif
             Console.WriteLine("Bienvenue dans la gestion de bibliothèque !");
             Console.WriteLine("-----------------------------------------");
-
+            
             bool continuer = true;
             while (continuer)
             {
@@ -74,13 +77,15 @@ namespace ExoCsharp
             }
         }
     }
-
-
+    
     class Bibliotheque
     {
 
         public List<Livre> Livres = new List<Livre>();
 
+        // Méthodes pour gérer les livres et les personnes
+        
+        // Afficher tous les livres
         public static void AfficherLivres(List<Livre> bibliotheque)
         {
 
@@ -92,6 +97,7 @@ namespace ExoCsharp
 
         }
 
+        // Ajouter un livre
         public static void AjouterLivre(List<Livre> bibliotheque)
         {
             Console.Write("Titre : ");
@@ -124,7 +130,7 @@ namespace ExoCsharp
             Console.WriteLine("Livre ajouté avec succès !");
         }
 
-
+        // Rechercher un livre par titre
         public static void RechercherLivre(List<Livre> bibliotheque)
         {
             Console.Write("Entrez le titre à rechercher : ");
@@ -139,6 +145,8 @@ namespace ExoCsharp
 
 
         }
+
+        // Trier les livres par auteur
         public static void TrierLivres(List<Livre> bibliotheque)
         {
             bibliotheque.Sort((l1, l2) => l1.Auteur.CompareTo(l2.Auteur));
@@ -153,6 +161,7 @@ namespace ExoCsharp
 
         }
 
+        // Afficher toutes les personnes
         public static void AfficherPersonnes(List<Personne> personnes)
         {
             Console.WriteLine("\n--- Liste des personnes ---");
@@ -162,19 +171,21 @@ namespace ExoCsharp
             }
 
         }
-
+        
+        // Emprunter un livre   
         public static void EmprunterLivre(List<Livre> bibliotheque, List<Personne> personnes)
         {
             Console.Write("Entrez le nom de la personne empruntant le livre : ");
             string nomPersonne = Console.ReadLine();
-            
+
             var personne = personnes.Find(p => p.Nom.Equals(nomPersonne, StringComparison.OrdinalIgnoreCase));
             if (personne == null)
             {
                 Console.WriteLine($"{nomPersonne} n'est pas inscrit dans la bibliothèque.");
                 Console.Write("Entrez un nom qui figure dans la liste de la bibliotheque : ");
                 nomPersonne = Console.ReadLine();
-            } else
+            }
+            else
             {
                 Console.WriteLine($"Bienvenue {personne.Prenom} {personne.Nom} !");
             }
@@ -189,9 +200,10 @@ namespace ExoCsharp
                 return;
             }
 
-            bibliotheque.Remove(livre);
             Console.WriteLine($"{personne.Prenom} {personne.Nom} a emprunté le livre '{livre.Titre}'.");
         }
+
+        // Ajouter une personne
 
         public static void AjouterPersonne(List<Personne> personnes)
         {
