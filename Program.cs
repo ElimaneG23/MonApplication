@@ -7,13 +7,6 @@ namespace ExoCsharp
     {
         static void Main(string[] args)
         {
-            List<Personne> personnes = new List<Personne>();
-            Personne personne1 = new Personne("Gueye", "Elimane", "elimaneg@gmail.com");
-            Personne personne2 = new Personne("Dia", "Matel", "cdia424g@gmail.com");
-            Personne personne3 = new Personne("Seck", "Pablo", "sckpablo1g@gmail.com");
-            Personne personne4 = new Personne("Ndiaye", "Daouda", "dndiayeg@gmail.com");
-            Personne personne5 = new Personne("Sow", "Lamine", "sowlamine4g@gmail.com");
-            personnes.AddRange(personne1, personne2, personne3, personne4, personne5);
 
             List<Livre> bibliotheque = new List<Livre>();
             Livre livre1 = new Livre("1984", "George Orwell", 123456);
@@ -21,7 +14,15 @@ namespace ExoCsharp
             Livre livre3 = new Livre("Fahrenheit 451", "Ray Bradbury", 345678);
             Livre livre4 = new Livre("Brave New World", "Aldous Huxley", 901234);
             Livre livre5 = new Livre("Les Misérables", "Victor Hugo", 567890);
-            bibliotheque.AddRange(livre1, livre2, livre3, livre4, livre5);
+            bibliotheque.AddRange(new List<Livre> { livre1, livre2, livre3, livre4, livre5 });
+
+            List<Personne> personnes = new List<Personne>();
+            Personne personne1 = new Personne("Gueye", "Elimane", "elimaneg@gmail.com");
+            Personne personne2 = new Personne("Dia", "Matel", "cdia424g@gmail.com");
+            Personne personne3 = new Personne("Seck", "Pablo", "sckpablo1g@gmail.com");
+            Personne personne4 = new Personne("Ndiaye", "Daouda", "dndiayeg@gmail.com");
+            Personne personne5 = new Personne("Sow", "Lamine", "sowlamine4g@gmail.com");
+            personnes.AddRange(new List<Personne> { personne1, personne2, personne3, personne4, personne5 });
 
             Console.WriteLine("Bienvenue dans la gestion de bibliothèque !");
             Console.WriteLine("-----------------------------------------");
@@ -109,17 +110,17 @@ namespace ExoCsharp
                 titre = Console.ReadLine();
             }
 
-            int annee;
+            int isbn;
             while (true)
             {
                 Console.Write("ISBN : ");
-                if (int.TryParse(Console.ReadLine(), out annee))
+                if (int.TryParse(Console.ReadLine(), out isbn))
                     break;
                 else
                     Console.WriteLine("Veuillez  entrer un nombre valide pour l'année.");
             }
 
-            bibliotheque.Add(new Livre(titre, auteur, annee));
+            bibliotheque.Add(new Livre(titre, auteur, isbn));
             Console.WriteLine("Livre ajouté avec succès !");
         }
 
