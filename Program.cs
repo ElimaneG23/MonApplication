@@ -29,7 +29,7 @@ namespace ExoCsharp
             // Menu interactif
             Console.WriteLine("Bienvenue dans la gestion de bibliothèque !");
             Console.WriteLine("-----------------------------------------");
-            
+
             bool continuer = true;
             while (continuer)
             {
@@ -77,14 +77,14 @@ namespace ExoCsharp
             }
         }
     }
-    
+
     class Bibliotheque
     {
 
         public List<Livre> Livres = new List<Livre>();
 
         // Méthodes pour gérer les livres et les personnes
-        
+
         // Afficher tous les livres
         public static void AfficherLivres(List<Livre> bibliotheque)
         {
@@ -137,7 +137,7 @@ namespace ExoCsharp
             string recherche = Console.ReadLine();
 
             var resultat = bibliotheque.FindAll(l => l.Titre.ToLower().Contains(recherche.ToLower()));
-    
+
             if (resultat.Count == 0)
                 Console.WriteLine("Aucun livre trouvé avec ce titre.");
             foreach (var livre in resultat)
@@ -171,7 +171,7 @@ namespace ExoCsharp
             }
 
         }
-        
+
         // Emprunter un livre   
         public static void EmprunterLivre(List<Livre> bibliotheque, List<Personne> personnes)
         {
@@ -230,9 +230,9 @@ namespace ExoCsharp
                 Console.Write("Email invalide (doit contenir @ et avoir entre 4 et 15 caractères). Remettez un Email : ");
                 email = Console.ReadLine();
 
-                personnes.Add(new Personne(nom, prenom, email));
-                Console.WriteLine("Personne ajoutée avec succès !");
             }
+            personnes.Add(new Personne(nom, prenom, email));
+            Console.WriteLine($"{nom} a ete ajouté avec succès !");
         }
     }
 }
