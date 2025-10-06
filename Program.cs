@@ -207,7 +207,7 @@ namespace ExoCsharp
             while (livre == null)
             {
                 Console.WriteLine($"{titreLivre} n'est pas disponible dans la bibliothèque.");
-                Console.Write("Entrez un prénom qui figure dans la liste : ");
+                Console.Write("Entrez un livre qui figure dans la bibliothèque : ");
                 titreLivre = Console.ReadLine();
                 livre = bibliotheque.Find(l => l.Titre.Equals(titreLivre, StringComparison.OrdinalIgnoreCase));
 
