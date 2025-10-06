@@ -175,32 +175,47 @@ namespace ExoCsharp
         // Emprunter un livre   
         public static void EmprunterLivre(List<Livre> bibliotheque, List<Personne> personnes)
         {
-            Console.Write("Entrez le nom de la personne empruntant le livre : ");
-            string nomPersonne = Console.ReadLine();
-
-            var personne = personnes.Find(p => p.Nom.Equals(nomPersonne, StringComparison.OrdinalIgnoreCase));
-            if (personne == null)
+            Console.WriteLine("Liste des personnes inscrites :");
+            foreach (var p in personnes)
             {
-                Console.WriteLine($"{nomPersonne} n'est pas inscrit dans la bibliothèque.");
-                Console.Write("Entrez un nom qui figure dans la liste de la bibliotheque : ");
-                nomPersonne = Console.ReadLine();
+                p.AfficherPersonne();
             }
-            else
+            Console.Write("Entrez le nom de la personne empruntant le livre : ");
+            string prenomPersonne = Console.ReadLine();
+
+            var personne = personnes.Find(p => p.Prenom.Equals(prenomPersonne, StringComparison.OrdinalIgnoreCase));
+            while (personne == null)
             {
-                Console.WriteLine($"Bienvenue {personne.Prenom} {personne.Nom} !");
+                Console.WriteLine($"{prenomPersonne} n'est pas inscrit dans la bibliothèque.");
+                Console.Write("Entrez un prénom qui figure dans la liste : ");
+                prenomPersonne = Console.ReadLine();
+                personne = personnes.Find(p => p.Prenom.Equals(prenomPersonne, StringComparison.OrdinalIgnoreCase));
+            }
+            Console.WriteLine($"\nBienvenue {personne.Prenom} {personne.Nom} !");
+
+            Console.WriteLine("Voici Liste des livres disponibles dans notre bibliothèque :");
+            foreach (var livreDisponible in bibliotheque)
+            {
+
+                livreDisponible.AfficherLivres();
             }
 
             Console.Write("Entrez le titre du livre à emprunter : ");
             string titreLivre = Console.ReadLine();
 
             var livre = bibliotheque.Find(l => l.Titre.Equals(titreLivre, StringComparison.OrdinalIgnoreCase));
-            if (livre == null)
+            while (livre == null)
             {
-                Console.WriteLine("Livre non trouvé.");
-                return;
-            }
+                Console.WriteLine($"{titreLivre} n'est pas disponible dans la bibliothèque.");
+                Console.Write("Entrez un prénom qui figure dans la liste : ");
+                titreLivre = Console.ReadLine();
+                livre = bibliotheque.Find(l => l.Titre.Equals(titreLivre, StringComparison.OrdinalIgnoreCase));
 
-            Console.WriteLine($"{personne.Prenom} {personne.Nom} a emprunté le livre '{livre.Titre}'.");
+                Console.WriteLine($"{personne.Prenom} {personne.Nom} Vous avez emprunté : {livre.Titre} par {livre.Auteur}. Merci de le rendre dans les délais !");
+            }
+            
+
+
         }
 
         // Ajouter une personne
@@ -209,7 +224,7 @@ namespace ExoCsharp
         {
             Console.Write("Nom : ");
             string nom = Console.ReadLine();
-            while (nom.Length < 4 || nom.Length > 150)
+            while (nom.Length < 2 || nom.Length > 15)
             {
                 Console.Write("Nombre de caractères invalide. Remettez un Nom : ");
                 nom = Console.ReadLine();
@@ -217,7 +232,7 @@ namespace ExoCsharp
 
             Console.Write("Prénom : ");
             string prenom = Console.ReadLine();
-            while (prenom.Length < 4 || prenom.Length > 150)
+            while (prenom.Length < 4 || prenom.Length > 25)
             {
                 Console.Write("Nombre de caracteres invalide. Remettez un Prénom : ");
                 prenom = Console.ReadLine();
@@ -225,7 +240,7 @@ namespace ExoCsharp
 
             Console.Write("Email : ");
             string email = Console.ReadLine();
-            while (email.Length < 4 || email.Length > 155 || !email.Contains("@"))
+            while (email.Length < 5 || email.Length > 20 || !email.Contains("@"))
             {
                 Console.Write("Email invalide (doit contenir @ et avoir entre 4 et 15 caractères). Remettez un Email : ");
                 email = Console.ReadLine();

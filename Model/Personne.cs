@@ -14,7 +14,10 @@ class Personne
 
     public void AfficherPersonne()
     {
-        Console.WriteLine($"Nom: {Nom}, Prénom: {Prenom}, Email: {Email}");
+        Console.WriteLine($"Nom: {Nom}");
+        Console.WriteLine($"Prénom: {Prenom}");
+        Console.WriteLine($"Email: {Email}");
+        Console.WriteLine("-------------------");
     }
 
 
