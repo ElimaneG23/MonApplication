@@ -1,46 +1,43 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using myNewApp.Model;
-namespace ExoCsharp
+using System.Collections.Generic;
+using Csharp.Models;
+
+namespace Csharp
 {
     class Program
     {
         static void Main(string[] args)
         {
+            List<Livre> bibliotheque = new List<Livre>
+{
+    new Livre { Titre = "1984", Auteur = "George Orwell", ISBN = 123456 },
+    new Livre { Titre = "Le Petit Prince", Auteur = "Antoine de Saint-Exupéry", ISBN = 789012 },
+    new Livre { Titre = "Fahrenheit 451", Auteur = "Ray Bradbury", ISBN = 345678 },
+    new Livre { Titre = "Brave New World", Auteur = "Aldous Huxley", ISBN = 901234 },
+    new Livre { Titre = "Les Misérables", Auteur = "Victor Hugo", ISBN = 567890 }
+};
 
-            // Initialisation de la bibliothèque avec quelques livres et personnes
-            List<Livre> bibliotheque = new List<Livre>();
-            Livre livre1 = new Livre("1984", "George Orwell", 123456);
-            Livre livre2 = new Livre("Le Petit Prince", "Antoine de Saint-Exupéry", 789012);
-            Livre livre3 = new Livre("Fahrenheit 451", "Ray Bradbury", 345678);
-            Livre livre4 = new Livre("Brave New World", "Aldous Huxley", 901234);
-            Livre livre5 = new Livre("Les Misérables", "Victor Hugo", 567890);
-            bibliotheque.AddRange(new List<Livre> { livre1, livre2, livre3, livre4, livre5 });
+            List<Personne> personnes = new List<Personne>
+{
+    new Personne { Nom = "Gueye", Prenom = "Elimane", Email = "elimaneg@gmail.com" },
+    new Personne { Nom = "Dia", Prenom = "Matel", Email = "cdia424g@gmail.com" },
+    new Personne { Nom = "Seck", Prenom = "Pablo", Email = "sckpablo1g@gmail.com" },
+    new Personne { Nom = "Ndiaye", Prenom = "Daouda", Email = "dndiayeg@gmail.com" },
+    new Personne { Nom = "Sow", Prenom = "Lamine", Email = "sowlamine4g@gmail.com" }
+};
 
-            List<Personne> personnes = new List<Personne>();
-            Personne personne1 = new Personne("Gueye", "Elimane", "elimaneg@gmail.com");
-            Personne personne2 = new Personne("Dia", "Matel", "cdia424g@gmail.com");
-            Personne personne3 = new Personne("Seck", "Pablo", "sckpablo1g@gmail.com");
-            Personne personne4 = new Personne("Ndiaye", "Daouda", "dndiayeg@gmail.com");
-            Personne personne5 = new Personne("Sow", "Lamine", "sowlamine4g@gmail.com");
-            personnes.AddRange(new List<Personne> { personne1, personne2, personne3, personne4, personne5 });
-
-
-            // Menu interactif
-            Console.WriteLine("Bienvenue dans la gestion de bibliothèque !");
-            Console.WriteLine("-----------------------------------------");
 
             bool continuer = true;
             while (continuer)
             {
-                Console.WriteLine("Choisissez une option : ");
+                Console.WriteLine("\n--- Menu ---");
                 Console.WriteLine("1. Afficher tous les livres");
                 Console.WriteLine("2. Ajouter un livre");
                 Console.WriteLine("3. Rechercher un livre par titre");
-                Console.WriteLine("4. Trier par auteurs ");
-                Console.WriteLine("5. Liste des personnes");
-                Console.WriteLine("6. Emprunter un livre");
-                Console.WriteLine("7. Ajouter une personne");
+                Console.WriteLine("4. Trier par auteurs");
+                Console.WriteLine("5. Afficher toutes les personnes");
+                Console.WriteLine("6. Ajouter une personne");
+                Console.WriteLine("7. Emprunter un livre");
                 Console.WriteLine("8. Quitter");
 
                 string choix = Console.ReadLine();
@@ -53,7 +50,6 @@ namespace ExoCsharp
                     case "2":
                         Bibliotheque.AjouterLivre(bibliotheque);
                         break;
-
                     case "3":
                         Bibliotheque.RechercherLivre(bibliotheque);
                         break;
@@ -64,14 +60,17 @@ namespace ExoCsharp
                         Bibliotheque.AfficherPersonnes(personnes);
                         break;
                     case "6":
-                        Bibliotheque.EmprunterLivre(bibliotheque, personnes);
+                        Bibliotheque.AjouterPersonne(personnes);
                         break;
                     case "7":
-                        Bibliotheque.AjouterPersonne(personnes);
+                        Bibliotheque.EmprunterLivre(bibliotheque, personnes);
                         break;
                     case "8":
                         continuer = false;
                         Console.WriteLine("Au revoir !");
+                        break;
+                    default:
+                        Console.WriteLine("Option invalide, réessayez.");
                         break;
                 }
             }
@@ -80,174 +79,176 @@ namespace ExoCsharp
 
     class Bibliotheque
     {
-
-        public List<Livre> Livres = new List<Livre>();
-
-        // Méthodes pour gérer les livres et les personnes
-
-        // Afficher tous les livres
         public static void AfficherLivres(List<Livre> bibliotheque)
         {
-
             Console.WriteLine("\n--- Liste des livres ---");
             foreach (var livre in bibliotheque)
-            {
                 livre.AfficherLivres();
-            }
-
         }
 
-        // Ajouter un livre
         public static void AjouterLivre(List<Livre> bibliotheque)
         {
-            Console.Write("Titre : ");
-            string titre = Console.ReadLine();
-            while (titre.Length < 4 || titre.Length > 150)
+            try
             {
-                Console.Write("Nombre de caractères invalide. Remettez un Titre : ");
-                titre = Console.ReadLine();
-            }
+                Console.Write("Titre : ");
+                string titre = Console.ReadLine();
+                while (string.IsNullOrWhiteSpace(titre) || titre.Length < 4)
+                {
+                    Console.Write("Titre invalide. Réessayez : ");
+                    titre = Console.ReadLine();
+                }
 
-            Console.Write("Auteur : ");
-            string auteur = Console.ReadLine();
-            while (auteur.Length < 4 || auteur.Length > 150)
+                Console.Write("Auteur : ");
+                string auteur = Console.ReadLine();
+                while (string.IsNullOrWhiteSpace(auteur) || auteur.Length < 4)
+                {
+                    Console.Write("Auteur invalide. Réessayez : ");
+                    auteur = Console.ReadLine();
+                }
+
+                int isbn;
+                while (true)
+                {
+                    Console.Write("ISBN (nombre) : ");
+                    if (int.TryParse(Console.ReadLine(), out isbn))
+                        break;
+                    else
+                        Console.WriteLine("ISBN invalide. Réessayez.");
+                }
+
+                bibliotheque.Add(new Livre { Titre = titre, Auteur = auteur, ISBN = isbn });
+                Console.WriteLine("Livre ajouté avec succès !");
+            }
+            catch (Exception ex)
             {
-                Console.Write("Nombre de caracteres invalide. Remettez un auteur : ");
-                titre = Console.ReadLine();
+                Console.WriteLine("Erreur lors de l'ajout du livre : " + ex.Message);
             }
-
-            int isbn;
-            while (true)
-            {
-                Console.Write("ISBN : ");
-                if (int.TryParse(Console.ReadLine(), out isbn))
-                    break;
-                else
-                    Console.WriteLine("Veuillez  entrer un nombre valide pour l'année.");
-            }
-
-            bibliotheque.Add(new Livre(titre, auteur, isbn));
-            Console.WriteLine("Livre ajouté avec succès !");
         }
 
-        // Rechercher un livre par titre
         public static void RechercherLivre(List<Livre> bibliotheque)
         {
-            Console.Write("Entrez le titre à rechercher : ");
-            string recherche = Console.ReadLine();
+            try
+            {
+                Console.Write("Entrez le titre à rechercher : ");
+                string recherche = Console.ReadLine();
 
-            var resultat = bibliotheque.FindAll(l => l.Titre.ToLower().Contains(recherche.ToLower()));
-
-            if (resultat.Count == 0)
-                Console.WriteLine("Aucun livre trouvé avec ce titre.");
-            foreach (var livre in resultat)
-                livre.AfficherLivres();
-
-
+                var resultat = bibliotheque.FindAll(l => l.Titre.ToLower().Contains(recherche.ToLower()));
+                if (resultat.Count == 0)
+                    Console.WriteLine("Aucun livre trouvé.");
+                else
+                    resultat.ForEach(l => l.AfficherLivres());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors de la recherche : " + ex.Message);
+            }
         }
 
-        // Trier les livres par auteur
         public static void TrierLivres(List<Livre> bibliotheque)
         {
-            bibliotheque.Sort((l1, l2) => l1.Auteur.CompareTo(l2.Auteur));
-            Console.WriteLine("Livres triés par ordre alphabetique des auteurs.");
-
-            foreach (var livre in bibliotheque)
+            try
             {
-                Console.WriteLine($"Auteur: {livre.Auteur}");
-                Console.WriteLine($"Titre: {livre.Titre}");
-                Console.WriteLine($"\n------------------------\n");
+                bibliotheque.Sort((l1, l2) => l1.Auteur.CompareTo(l2.Auteur));
+                Console.WriteLine("Livres triés par auteurs :");
+                bibliotheque.ForEach(l => l.AfficherLivres());
             }
-
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors du tri : " + ex.Message);
+            }
         }
 
-        // Afficher toutes les personnes
         public static void AfficherPersonnes(List<Personne> personnes)
         {
             Console.WriteLine("\n--- Liste des personnes ---");
-            foreach (var personne in personnes)
-            {
-                personne.AfficherPersonne();
-            }
-
+            personnes.ForEach(p => p.AfficherPersonne());
         }
-
-        // Emprunter un livre   
-        public static void EmprunterLivre(List<Livre> bibliotheque, List<Personne> personnes)
-        {
-            Console.WriteLine("Liste des personnes inscrites :");
-            foreach (var p in personnes)
-            {
-                p.AfficherPersonne();
-            }
-            Console.Write("Entrez le nom de la personne empruntant le livre : ");
-            string prenomPersonne = Console.ReadLine();
-
-            var personne = personnes.Find(p => p.Prenom.Equals(prenomPersonne, StringComparison.OrdinalIgnoreCase));
-            while (personne == null)
-            {
-                Console.WriteLine($"{prenomPersonne} n'est pas inscrit dans la bibliothèque.");
-                Console.Write("Entrez un prénom qui figure dans la liste : ");
-                prenomPersonne = Console.ReadLine();
-                personne = personnes.Find(p => p.Prenom.Equals(prenomPersonne, StringComparison.OrdinalIgnoreCase));
-            }
-            Console.WriteLine($"\nBienvenue {personne.Prenom} {personne.Nom} !");
-
-            Console.WriteLine("Voici Liste des livres disponibles dans notre bibliothèque :");
-            foreach (var livreDisponible in bibliotheque)
-            {
-
-                livreDisponible.AfficherLivres();
-            }
-
-            Console.Write("Entrez le titre du livre à emprunter : ");
-            string titreLivre = Console.ReadLine();
-
-            var livre = bibliotheque.Find(l => l.Titre.Equals(titreLivre, StringComparison.OrdinalIgnoreCase));
-            while (livre == null)
-            {
-                Console.WriteLine($"{titreLivre} n'est pas disponible dans la bibliothèque.");
-                Console.Write("Entrez un livre qui figure dans la bibliothèque : ");
-                titreLivre = Console.ReadLine();
-                livre = bibliotheque.Find(l => l.Titre.Equals(titreLivre, StringComparison.OrdinalIgnoreCase));
-
-                Console.WriteLine($"{personne.Prenom} {personne.Nom} Vous avez emprunté : {livre.Titre} par {livre.Auteur}. Merci de le rendre dans les délais !");
-            }
-            
-
-
-        }
-
-        // Ajouter une personne
 
         public static void AjouterPersonne(List<Personne> personnes)
         {
-            Console.Write("Nom : ");
-            string nom = Console.ReadLine();
-            while (nom.Length < 2 || nom.Length > 15)
+            try
             {
-                Console.Write("Nombre de caractères invalide. Remettez un Nom : ");
-                nom = Console.ReadLine();
-            }
+                Console.Write("Nom : ");
+                string nom = Console.ReadLine();
+                while (string.IsNullOrWhiteSpace(nom) || nom.Length < 2)
+                {
+                    Console.Write("Nom invalide. Réessayez : ");
+                    nom = Console.ReadLine();
+                }
 
-            Console.Write("Prénom : ");
-            string prenom = Console.ReadLine();
-            while (prenom.Length < 4 || prenom.Length > 25)
+                Console.Write("Prénom : ");
+                string prenom = Console.ReadLine();
+                while (string.IsNullOrWhiteSpace(prenom) || prenom.Length < 2)
+                {
+                    Console.Write("Prénom invalide. Réessayez : ");
+                    prenom = Console.ReadLine();
+                }
+
+                Console.Write("Email : ");
+                string email = Console.ReadLine();
+                while (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
+                {
+                    Console.Write("Email invalide. Réessayez : ");
+                    email = Console.ReadLine();
+                }
+
+                personnes.Add(new Personne { Nom = nom, Prenom = prenom, Email = email });
+                Console.WriteLine("Personne ajoutée avec succès !");
+            }
+            catch (Exception ex)
             {
-                Console.Write("Nombre de caracteres invalide. Remettez un Prénom : ");
-                prenom = Console.ReadLine();
+                Console.WriteLine("Erreur lors de l'ajout de la personne : " + ex.Message);
             }
-
-            Console.Write("Email : ");
-            string email = Console.ReadLine();
-            while (email.Length < 5 || email.Length > 20 || !email.Contains("@"))
-            {
-                Console.Write("Email invalide (doit contenir @ et avoir entre 4 et 15 caractères). Remettez un Email : ");
-                email = Console.ReadLine();
-
-            }
-            personnes.Add(new Personne(nom, prenom, email));
-            Console.WriteLine($"{nom} a ete ajouté avec succès !");
         }
+        // Emprunter un livre
+        public static void EmprunterLivre(List<Livre> bibliotheque, List<Personne> personnes)
+        {
+            try
+            {
+                if (personnes.Count == 0 || bibliotheque.Count == 0)
+                {
+                    Console.WriteLine("Aucun livre ou personne disponible pour emprunter.");
+                    return;
+                }
+
+                Console.WriteLine("Liste des personnes inscrites :");
+                foreach (var p in personnes)
+                    p.AfficherPersonne();
+
+                Personne personne = null;
+                while (personne == null)
+                {
+                    Console.Write("Entrez le prénom de la personne empruntant le livre : ");
+                    string prenomPersonne = Console.ReadLine();
+                    personne = personnes.Find(p => p.Prenom.Equals(prenomPersonne, StringComparison.OrdinalIgnoreCase));
+
+                    if (personne == null)
+                        Console.WriteLine("Cette personne n'est pas inscrite, veuillez réessayer.");
+                }
+
+                Console.WriteLine($"\nBienvenue {personne.Prenom} {personne.Nom} !");
+                Console.WriteLine("Liste des livres disponibles :");
+                foreach (var livre in bibliotheque)
+                    livre.AfficherLivres();
+
+                Livre livreEmprunte = null;
+                while (livreEmprunte == null)
+                {
+                    Console.Write("Entrez le titre du livre à emprunter : ");
+                    string titreLivre = Console.ReadLine();
+                    livreEmprunte = bibliotheque.Find(l => l.Titre.Equals(titreLivre, StringComparison.OrdinalIgnoreCase));
+
+                    if (livreEmprunte == null)
+                        Console.WriteLine("Livre non trouvé, veuillez réessayer.");
+                }
+
+                Console.WriteLine($"{personne.Prenom} {personne.Nom} a emprunté : {livreEmprunte.Titre} par {livreEmprunte.Auteur}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Une erreur est survenue : {ex.Message}");
+            }
+        }
+
     }
 }
