@@ -1,29 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace myNewApp.Model;
-
-class Livre
+namespace Csharp.Models
 {
-    
-    public string Titre;
-    public string Auteur;
-    public int ISBN;
-
-   
-
-    public Livre(string titre, string auteur, int isbn)
+    public class Livre
     {
-        Titre = titre;
-        Auteur = auteur;
-        ISBN = isbn;
+        public string Titre { get; set; }
+        public string Auteur { get; set; }
+        public int ISBN { get; set; }
 
+        public Livre() { }
+        public void AfficherLivres()
+        {
+            Console.WriteLine($"Voici le livre intutilé : {Titre}");
+            Console.WriteLine($"Auteur : {Auteur}");
+            Console.WriteLine($"ISBN : {ISBN}");
+            Console.WriteLine("-------------------");
+        }
 
     }
-    public void AfficherLivres()
-    {
-        Console.WriteLine($"Voici le livre intutilé : {Titre}");
-        Console.WriteLine($"Auteur : {Auteur}");
-        Console.WriteLine($"ISBN : {ISBN}");
-        Console.WriteLine("-------------------");
-    }
-
 }
