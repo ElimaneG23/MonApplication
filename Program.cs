@@ -9,22 +9,22 @@ namespace Csharp
         static void Main(string[] args)
         {
             List<Livre> bibliotheque = new List<Livre>
-{
-    new Livre { Titre = "1984", Auteur = "George Orwell", ISBN = 123456 },
-    new Livre { Titre = "Le Petit Prince", Auteur = "Antoine de Saint-Exupéry", ISBN = 789012 },
-    new Livre { Titre = "Fahrenheit 451", Auteur = "Ray Bradbury", ISBN = 345678 },
-    new Livre { Titre = "Brave New World", Auteur = "Aldous Huxley", ISBN = 901234 },
-    new Livre { Titre = "Les Misérables", Auteur = "Victor Hugo", ISBN = 567890 }
-};
+            {
+                new Livre { Titre = "1984", Auteur = "George Orwell", ISBN = 123456 },
+                new Livre { Titre = "Le Petit Prince", Auteur = "Antoine de Saint-Exupéry", ISBN = 789012 },
+                new Livre { Titre = "Fahrenheit 451", Auteur = "Ray Bradbury", ISBN = 345678 },
+                new Livre { Titre = "Brave New World", Auteur = "Aldous Huxley", ISBN = 901234 },
+                new Livre { Titre = "Les Misérables", Auteur = "Victor Hugo", ISBN = 567890 }
+            };
 
             List<Personne> personnes = new List<Personne>
-{
-    new Personne { Nom = "Gueye", Prenom = "Elimane", Email = "elimaneg@gmail.com" },
-    new Personne { Nom = "Dia", Prenom = "Matel", Email = "cdia424g@gmail.com" },
-    new Personne { Nom = "Seck", Prenom = "Pablo", Email = "sckpablo1g@gmail.com" },
-    new Personne { Nom = "Ndiaye", Prenom = "Daouda", Email = "dndiayeg@gmail.com" },
-    new Personne { Nom = "Sow", Prenom = "Lamine", Email = "sowlamine4g@gmail.com" }
-};
+            {
+                new Personne { Id = 1, Nom = "Gueye", Prenom = "Elimane", Email = "elimaneg@gmail.com" },
+                new Personne { Id = 2, Nom = "Dia", Prenom = "Matel", Email = "cdia424g@gmail.com" },
+                new Personne { Id = 3, Nom = "Seck", Prenom = "Pablo", Email = "sckpablo1g@gmail.com" },
+                new Personne { Id = 4, Nom = "Ndiaye", Prenom = "Daouda", Email = "dndiayeg@gmail.com" },
+                new Personne { Id = 5, Nom = "Sow", Prenom = "Lamine", Email = "sowlamine4g@gmail.com" }
+            };
 
 
             bool continuer = true;
@@ -79,13 +79,15 @@ namespace Csharp
 
     class Bibliotheque
     {
+        // Affichage des livres
         public static void AfficherLivres(List<Livre> bibliotheque)
         {
             Console.WriteLine("\n--- Liste des livres ---");
             foreach (var livre in bibliotheque)
-                livre.AfficherLivres();
+                Console.WriteLine(livre); // ToString() est appelé automatiquement
         }
 
+        // Ajouter un livre
         public static void AjouterLivre(List<Livre> bibliotheque)
         {
             try
@@ -125,6 +127,7 @@ namespace Csharp
             }
         }
 
+        // Rechercher un livre par titre
         public static void RechercherLivre(List<Livre> bibliotheque)
         {
             try
@@ -136,7 +139,7 @@ namespace Csharp
                 if (resultat.Count == 0)
                     Console.WriteLine("Aucun livre trouvé.");
                 else
-                    resultat.ForEach(l => l.AfficherLivres());
+                    resultat.ForEach(l => Console.WriteLine(l)); // ToString()
             }
             catch (Exception ex)
             {
@@ -144,13 +147,14 @@ namespace Csharp
             }
         }
 
+        // Trier les livres par auteur
         public static void TrierLivres(List<Livre> bibliotheque)
         {
             try
             {
                 bibliotheque.Sort((l1, l2) => l1.Auteur.CompareTo(l2.Auteur));
                 Console.WriteLine("Livres triés par auteurs :");
-                bibliotheque.ForEach(l => l.AfficherLivres());
+                bibliotheque.ForEach(l => Console.WriteLine(l)); // ToString()
             }
             catch (Exception ex)
             {
@@ -158,12 +162,15 @@ namespace Csharp
             }
         }
 
+        // Affichage des personnes
         public static void AfficherPersonnes(List<Personne> personnes)
         {
             Console.WriteLine("\n--- Liste des personnes ---");
-            personnes.ForEach(p => p.AfficherPersonne());
+            foreach (var p in personnes)
+                Console.WriteLine(p); // ToString()
         }
 
+        // Ajouter une personne avec ID automatique
         public static void AjouterPersonne(List<Personne> personnes)
         {
             try
@@ -192,7 +199,9 @@ namespace Csharp
                     email = Console.ReadLine();
                 }
 
-                personnes.Add(new Personne { Nom = nom, Prenom = prenom, Email = email });
+                int nouvelId = personnes.Count > 0 ? personnes[^1].Id + 1 : 1; // ID automatique
+                personnes.Add(new Personne { Id = nouvelId, Nom = nom, Prenom = prenom, Email = email });
+
                 Console.WriteLine("Personne ajoutée avec succès !");
             }
             catch (Exception ex)
@@ -200,7 +209,8 @@ namespace Csharp
                 Console.WriteLine("Erreur lors de l'ajout de la personne : " + ex.Message);
             }
         }
-        // Emprunter un livre
+
+        // Emprunter un livre par ID de la personne
         public static void EmprunterLivre(List<Livre> bibliotheque, List<Personne> personnes)
         {
             try
@@ -213,23 +223,28 @@ namespace Csharp
 
                 Console.WriteLine("Liste des personnes inscrites :");
                 foreach (var p in personnes)
-                    p.AfficherPersonne();
+                    Console.WriteLine(p); // ToString()
 
                 Personne personne = null;
                 while (personne == null)
                 {
-                    Console.Write("Entrez le prénom de la personne empruntant le livre : ");
-                    string prenomPersonne = Console.ReadLine();
-                    personne = personnes.Find(p => p.Prenom.Equals(prenomPersonne, StringComparison.OrdinalIgnoreCase));
-
-                    if (personne == null)
-                        Console.WriteLine("Cette personne n'est pas inscrite, veuillez réessayer.");
+                    Console.Write("Entrez l'ID de la personne empruntant le livre : ");
+                    if (int.TryParse(Console.ReadLine(), out int idPersonne))
+                    {
+                        personne = personnes.Find(p => p.Id == idPersonne);
+                        if (personne == null)
+                            Console.WriteLine("Aucune personne trouvée avec cet ID, veuillez réessayer.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Entrée invalide. Veuillez entrer un nombre.");
+                    }
                 }
 
                 Console.WriteLine($"\nBienvenue {personne.Prenom} {personne.Nom} !");
                 Console.WriteLine("Liste des livres disponibles :");
                 foreach (var livre in bibliotheque)
-                    livre.AfficherLivres();
+                    Console.WriteLine(livre); // ToString()
 
                 Livre livreEmprunte = null;
                 while (livreEmprunte == null)
@@ -248,7 +263,7 @@ namespace Csharp
             {
                 Console.WriteLine($"Une erreur est survenue : {ex.Message}");
             }
-        }
 
+        }
     }
 }

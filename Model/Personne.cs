@@ -1,26 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Csharp.Models
 {
     public class Personne
     {
+        public int Id { get; set; } // ID automatique
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public string Email { get; set; }
 
-        public Personne() { }
-
-        public void AfficherPersonne()
+        // ToString() pour affichage simple
+        public override string ToString()
         {
-            Console.WriteLine($"Nom: {Nom}");
-            Console.WriteLine($"Prénom: {Prenom}");
-            Console.WriteLine($"Email: {Email}");
-            Console.WriteLine("-------------------");
+            return $"ID: {Id} | Nom: {Nom} | Prénom: {Prenom} | Email: {Email}";
         }
-
     }
 }
